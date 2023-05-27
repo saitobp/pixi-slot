@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [],
+  "rules": {
+    "react/prop-types": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prettier/prettier": "error",
+    "func-call-spacing": "off",
+    "no-use-before-define": "off"
+  }
+}
