@@ -1,65 +1,54 @@
 import { Button } from '@pixi/ui'
-import anime from 'animejs'
 import * as Pixi from 'pixi.js'
+import { Keys } from './components/Column'
+import { Slots } from './components/Slots'
+import './style.css'
 
 const app = new Pixi.Application<HTMLCanvasElement>({
-  width: 640,
-  height: 480,
+  width: 480,
+  height: 800,
 })
 
-const slot1 = Pixi.Sprite.from('/slot-1.png')
-slot1.x = 100
-slot1.y = 100
+const background = Pixi.Sprite.from('background.png')
 
-const slot2 = Pixi.Sprite.from('/slot-1.png')
-slot2.x = 100
-slot2.y = 200
+const end: Keys[][] = [
+  ['9', '9', '9', '9', '9'],
+  ['9', '9', '9', '9', '9'],
+  ['9', '9', '9', '9', '9'],
+  ['9', '9', '9', '9', '9'],
+  ['9', '9', '9', '9', '9'],
+]
+
+const slots = new Slots()
+slots.y = slots.y + 100
 
 const container = new Pixi.Container()
-
-const button = new Button(
-  new Pixi.Graphics()
-    .beginFill(0xFFFFFF)
-    .drawRoundedRect(0, 0, 100, 50, 15)
+const start = new Button(
+  new Pixi.Graphics().beginFill(0xffffff).drawRoundedRect(-44, 0, 80, 40, 12),
 )
 
-const animation1 = anime({
-  targets: slot1,
-  y: [{ value: 0, duration: 100 }, { value: 800, delay: 50 }],
-  autoplay: false,
-  easing: 'linear',
-  complete: () => {
-    slot1.y = 100
-  }
+const stop = new Button(
+  new Pixi.Graphics().beginFill(0xff0fff).drawRoundedRect(44, 0, 80, 40, 12),
+)
+
+start.onPress.connect(async () => {
+  slots.startSpin()
 })
 
-const animation2 = anime({
-  targets: slot2,
-  y: [{ value: 100, duration: 100 }, { value: 900, delay: 50 }],
-  autoplay: false,
-  easing: 'linear',
-  complete: () => {
-    slot2.y = 200
-  }
+stop.onPress.connect(async () => {
+  slots.stopSpin(end)
 })
 
-button.onPress.connect(() => {
-  console.log('button pressed')
-  animation1.play()
-  animation2.play()
-})
+container.x = 200
+container.y = 752
 
-container.x = 100
-container.y = 400
+container.addChild(start.view)
+container.addChild(stop.view)
 
-container.addChild(button.view)
-
-
-app.stage.addChild(slot1)
-app.stage.addChild(slot2)
+app.stage.addChild(background)
 app.stage.addChild(container)
-// app.stage.addChild(button.view)
+app.stage.addChild(slots)
 
-
+app.view.classList.add('game-canvas')
 
 document.body.appendChild(app.view)
