@@ -46,7 +46,7 @@ export class Slots extends Pixi.Container {
     mask.beginFill(0xffffff)
     mask.drawRect(0, 100, this.cols * 100, 100 * 5 - 17)
     mask.endFill()
-    this.mask = mask
+    // this.mask = mask
 
     // Add the frame
     const frame = Pixi.Sprite.from('frame.png')

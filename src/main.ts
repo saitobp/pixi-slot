@@ -52,3 +52,24 @@ app.stage.addChild(slots)
 app.view.classList.add('game-canvas')
 
 document.body.appendChild(app.view)
+
+function resizeApp() {
+  const newWidth = window.innerWidth
+  const newHeight = window.innerHeight
+  const aspectRatio = app.renderer.width / app.renderer.height
+
+  if (newWidth / newHeight < aspectRatio) {
+    app.renderer.resize(newWidth, newWidth / aspectRatio)
+  } else {
+    app.renderer.resize(newHeight * aspectRatio, newHeight)
+  }
+
+  app.view.style.width = `${app.renderer.width}px`
+  app.view.style.height = `${app.renderer.height}px`
+
+  app.stage.scale.x = app.renderer.width / 480
+  app.stage.scale.y = app.renderer.height / 800
+}
+
+resizeApp()
+window.addEventListener('resize', resizeApp)
